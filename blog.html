@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>学びの記録 ― 五つの太陽</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;0,9..144,900;1,9..144,600&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#ECE0C0;
+    --paper-deep:#DDCB99;
+    --paper-card:#F4EAD0;
+    --ink:#2B1D12;
+    --ink-soft:#5A4632;
+    --red:#A32B22;
+    --orange:#D9812A;
+    --green:#1E6B4F;
+    --gold:#B8901F;
+    --line:#C9B67F;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Source Serif 4", serif;
+    line-height:1.75;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  h1,h2,h3{
+    font-family:"Fraunces", serif;
+    font-weight:700;
+    margin:0;
+    color:var(--ink);
+  }
+
+  a{color:var(--red);}
+  a:hover{color:var(--orange);}
+
+  .greca{
+    width:100%;
+    height:14px;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='16' viewBox='0 0 40 16'%3E%3Cpath d='M0 16 L0 8 L8 8 L8 0 L16 0 L16 8 L24 8 L24 16 Z' fill='%231E6B4F'/%3E%3Cpath d='M20 16 L20 8 L28 8 L28 0 L36 0 L36 8 L40 8 L40 16 Z' fill='%23A32B22'/%3E%3C/svg%3E");
+    background-repeat:repeat-x;
+    background-size:40px 14px;
+    opacity:0.85;
+  }
+
+  /* ---------- nav ---------- */
+  header.site-nav{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    padding:22px 6vw;
+    background:var(--paper-deep);
+    border-bottom:1px solid var(--line);
+  }
+  .site-nav .brand{
+    font-family:"Fraunces", serif;
+    font-weight:700;
+    font-size:1.25rem;
+    letter-spacing:0.02em;
+    text-decoration:none;
+    color:var(--ink);
+  }
+  .site-nav nav{
+    display:flex;
+    gap:28px;
+    flex-wrap:wrap;
+  }
+  .site-nav nav a{
+    text-decoration:none;
+    color:var(--ink-soft);
+    font-size:0.95rem;
+    border-bottom:2px solid transparent;
+    padding-bottom:2px;
+  }
+  .site-nav nav a:hover{color:var(--red); border-bottom-color:var(--red);}
+  .site-nav nav a.current{color:var(--red); border-bottom-color:var(--gold);}
+
+  /* ---------- page head ---------- */
+  .page-head{
+    position:relative;
+    text-align:center;
+    padding:64px 6vw 48px;
+    overflow:hidden;
+  }
+  .page-head::before{
+    content:"";
+    position:absolute;
+    top:-40%;
+    left:50%;
+    width:700px;
+    height:700px;
+    transform:translateX(-50%);
+    background:radial-gradient(circle, rgba(216,129,42,0.16) 0%, rgba(216,129,42,0) 62%);
+    pointer-events:none;
+  }
+  .page-head .mini-sun{
+    width:64px;
+    height:64px;
+    margin:0 auto 20px;
+    position:relative;
+    z-index:1;
+  }
+  .page-head h1{
+    font-size:clamp(2rem, 4vw, 2.8rem);
+    position:relative;
+    z-index:1;
+  }
+  .page-head p{
+    max-width:520px;
+    margin:16px auto 0;
+    color:var(--ink-soft);
+    font-size:0.98rem;
+    position:relative;
+    z-index:1;
+  }
+
+  /* ---------- feed ---------- */
+  .feed-wrap{
+    max-width:640px;
+    margin:0 auto;
+    padding:50px 6vw 90px;
+  }
+
+  .feed{
+    display:flex;
+    flex-direction:column;
+  }
+
+  .entry{
+    position:relative;
+    padding:26px 0 26px 34px;
+    border-bottom:1px solid var(--line);
+  }
+  .entry:first-child{padding-top:0;}
+  .entry:last-child{border-bottom:none;}
+  .entry::before{
+    content:"";
+    position:absolute;
+    left:0;
+    top:32px;
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    background:var(--gold);
+    outline:2px solid var(--green);
+    outline-offset:2px;
+  }
+
+  .entry .date{
+    display:block;
+    font-family:"Fraunces", serif;
+    font-style:italic;
+    font-weight:600;
+    color:var(--red);
+    font-size:0.92rem;
+    margin-bottom:8px;
+    letter-spacing:0.01em;
+  }
+
+  .entry p{
+    margin:0;
+    color:var(--ink);
+    font-size:1rem;
+    white-space:pre-line;
+  }
+
+  .load-more{
+    text-align:center;
+    margin-top:44px;
+  }
+  .load-more span{
+    display:inline-block;
+    padding:11px 26px;
+    border:1px solid var(--ink-soft);
+    color:var(--ink-soft);
+    font-family:"Fraunces", serif;
+    font-size:0.9rem;
+    font-weight:600;
+  }
+
+  /* ---------- footer ---------- */
+  footer{
+    background:var(--ink);
+    color:var(--paper);
+    padding:56px 6vw 30px;
+  }
+  .footer-grid{
+    max-width:1080px;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:1.1fr 1fr;
+    gap:48px;
+  }
+  @media (max-width:760px){
+    .footer-grid{grid-template-columns:1fr;}
+  }
+  footer h3{
+    color:var(--paper);
+    font-size:1.05rem;
+    margin-bottom:14px;
+  }
+  footer nav.flinks{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    margin-bottom:20px;
+  }
+  footer nav.flinks a{
+    color:var(--paper-deep);
+    text-decoration:none;
+    font-size:0.92rem;
+  }
+  footer nav.flinks a:hover{color:var(--orange);}
+  footer .notice{
+    font-size:0.78rem;
+    color:#9c8f79;
+    line-height:1.6;
+    max-width:46ch;
+  }
+  footer form{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    max-width:360px;
+  }
+  footer form input,
+  footer form textarea{
+    background:#3a2c1c;
+    border:1px solid #5a4632;
+    color:var(--paper);
+    padding:10px 12px;
+    font-family:"Source Serif 4", serif;
+    font-size:0.9rem;
+  }
+  footer form textarea{resize:vertical; min-height:80px;}
+  footer form button{
+    align-self:flex-start;
+    background:var(--red);
+    color:var(--paper);
+    border:none;
+    padding:10px 24px;
+    font-family:"Fraunces", serif;
+    font-weight:600;
+    cursor:pointer;
+  }
+  footer form button:hover{background:var(--orange);}
+  .bottom-line{
+    max-width:1080px;
+    margin:40px auto 0;
+    padding-top:20px;
+    border-top:1px solid #4a3c2a;
+    font-size:0.78rem;
+    color:#9c8f79;
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+  }
+</style>
+</head>
+<body>
+
+<header class="site-nav">
+  <a href="index.html" class="brand">五つの太陽</a>
+  <nav>
+    <a href="index.html">ホーム</a>
+    <a href="blog.html" class="current">学びの記録</a>
+    <a href="gallery.html">画廊</a>
+    <a href="about.html">このサイトについて</a>
+  </nav>
+</header>
+
+<div class="page-head">
+  <svg class="mini-sun" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="太陽の紋章">
+    <g fill="#D9812A">
+      <path d="M120,8 L132,68 L108,68 Z" transform="rotate(0 120 120)"/>
+      <path d="M120,8 L132,68 L108,68 Z" transform="rotate(60 120 120)"/>
+      <path d="M120,8 L132,68 L108,68 Z" transform="rotate(120 120 120)"/>
+      <path d="M120,8 L132,68 L108,68 Z" transform="rotate(180 120 120)"/>
+      <path d="M120,8 L132,68 L108,68 Z" transform="rotate(240 120 120)"/>
+      <path d="M120,8 L132,68 L108,68 Z" transform="rotate(300 120 120)"/>
+    </g>
+    <g fill="#A32B22">
+      <path d="M120,20 L129,68 L111,68 Z" transform="rotate(30 120 120)"/>
+      <path d="M120,20 L129,68 L111,68 Z" transform="rotate(90 120 120)"/>
+      <path d="M120,20 L129,68 L111,68 Z" transform="rotate(150 120 120)"/>
+      <path d="M120,20 L129,68 L111,68 Z" transform="rotate(210 120 120)"/>
+      <path d="M120,20 L129,68 L111,68 Z" transform="rotate(270 120 120)"/>
+      <path d="M120,20 L129,68 L111,68 Z" transform="rotate(330 120 120)"/>
+    </g>
+    <circle cx="120" cy="120" r="66" fill="#ECE0C0" stroke="#B8901F" stroke-width="4"/>
+    <circle cx="120" cy="120" r="50" fill="none" stroke="#1E6B4F" stroke-width="3"/>
+    <circle cx="120" cy="120" r="32" fill="#2B1D12"/>
+    <circle cx="120" cy="94" r="5" fill="#B8901F"/>
+    <circle cx="120" cy="146" r="5" fill="#B8901F"/>
+    <circle cx="94" cy="120" r="5" fill="#B8901F"/>
+    <circle cx="146" cy="120" r="5" fill="#B8901F"/>
+    <circle cx="120" cy="120" r="7" fill="#A32B22"/>
+  </svg>
+  <h1>学びの記録</h1>
+  <p>メソアメリカ神話を学ぶ中で気づいたこと、調べたことを、日付順に短く書き留めていく場所です。</p>
+</div>
+
+<div class="greca"></div>
+
+<div class="feed-wrap">
+  <div class="feed">
+
+    <div class="entry">
+      <span class="date">2026年9月7日</span>
+      <p>アステカの創世神話「五つの太陽」について整理し始めた。世界が四度滅び、五度目の太陽(現在の世界)が神々の自己犠牲によって動き出す、という構造がとても壮大。まずは各「太陽」の名前と滅び方から覚える。</p>
+    </div>
+
+    <div class="entry">
+      <span class="date">2026年9月3日</span>
+      <p>マヤの暦について。ツォルキン暦(260日)とハアブ暦(365日)が組み合わさって「暦円」(カレンダーラウンド)を作る仕組み、頭では分かってもまだしっくり来ていない。図を描いて理解を進めたい。</p>
+    </div>
+
+    <div class="entry">
+      <span class="date">2026年8月28日</span>
+      <p>テオティワカンの「太陽のピラミッド」「月のピラミッド」、実はどの民族が建てたのか分かっていないという話に驚いた。あれだけの規模の都市を築いた人々の名前が伝わっていないというのは不思議な感覚。</p>
+    </div>
+
+    <div class="entry">
+      <span class="date">2026年8月20日</span>
+      <p>オルメカの巨石人頭像について調べる。あの独特の表情、素材の玄武岩がかなり離れた産地から運ばれているらしく、当時の輸送・組織力に驚かされる。ジャガーとの関わりも要チェック。</p>
+    </div>
+
+    <div class="entry">
+      <span class="date">2026年8月14日</span>
+      <p>このサイトを作り始めた。まずは基本文明(オルメカ、マヤ、テオティワカン、サポテカ、トルテカ、アステカ)の名前と時代を頭に入れるところから。「五つの太陽」をサイトの軸に据えることにした。</p>
+    </div>
+
+  </div>
+
+  <div class="load-more">
+    <span>これより前の記録は準備中</span>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <h3>五つの太陽</h3>
+      <nav class="flinks">
+        <a href="index.html">ホーム</a>
+        <a href="blog.html">学びの記録</a>
+        <a href="gallery.html">画廊</a>
+        <a href="about.html">このサイトについて</a>
+        <a href="#">Azalea Creative Room</a>
+      </nav>
+      <p class="notice">このサイトの文章・画像・イラストは、生成AIの学習データとしての使用を固く禁じます。無断転載・二次利用もご遠慮ください。</p>
+    </div>
+    <div>
+      <h3>お問い合わせ</h3>
+      <form action="https://formspree.io/f/maqvpvoz" method="POST">
+        <input type="text" name="name" placeholder="お名前" required>
+        <input type="email" name="email" placeholder="メールアドレス" required>
+        <textarea name="message" placeholder="メッセージ" required></textarea>
+        <button type="submit">送信する</button>
+      </form>
+    </div>
+  </div>
+  <div class="bottom-line">
+    <span>© 五つの太陽 ― メソアメリカ神話の回廊</span>
+    <span>Azalea Creative Room</span>
+  </div>
+</footer>
+
+</body>
+</html>
